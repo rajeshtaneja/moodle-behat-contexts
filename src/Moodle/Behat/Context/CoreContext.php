@@ -2,6 +2,8 @@
 
 namespace Moodle\Behat\Context;
 
+use Behat\MinkExtension\Context\MinkContext;
+
 /**
  * Steps definition for basic browsing and Moodle actions
  *
@@ -21,7 +23,6 @@ class CoreContext extends MinkContext
     {
         $this->parameters = $parameters;
     }
-   
 
     /**
      * @Given /^I am logged as a "([^"]*)"$/
