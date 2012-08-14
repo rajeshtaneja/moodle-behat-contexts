@@ -4,27 +4,34 @@ namespace Moodle\Behat\Context;
 
 use Behat\Behat\Context\BehatContext;
 
-require_once 'PHPUnit/Autoload.php';
-
 /**
- * Course context steps definitions
+ * Representation of the Moodle contexts
+ *
+ * It adds all the Moodle components
+ *
+ * @copyright 2012 David Monllaó
+ * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class MoodleContext extends BehatContext
 {
 
     /**
-     * Loads all the Moodle contexts
+     * Loads all the defined Moodle components
      *
+     * @throws Exception
      * @param array $parameters behat.yml settings
      */
     public function __construct(array $parameters) {
 
-        $dirpath = dirname(__FILE__);
+        $dir = opendir(dirname(__FILE__));
+        if (!$dir) {
+            throw new Exception('Moodle contexts can\'t be read');
+        }
 
         // Gets all the moodle contexts
-        $dir = opendir($dirpath);
         while (($filename = readdir($dir)) !== false) {
 
+            // Skipping base contexts
             if ($filename == '.' || $filename == '..' ||
                 $filename == 'MoodleContext.php' || $filename == 'BaseContext.php') {
                 continue;
