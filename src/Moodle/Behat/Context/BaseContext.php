@@ -9,6 +9,9 @@ use Behat\Behat\Context\TranslatedContextInterface;
  * Utilities base context
  *
  * All non-features MinkContext methods copied here
+ *
+ * @copyright 2012 David Monllaó
+ * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 abstract class BaseContext extends RawMinkContext implements TranslatedContextInterface
 {
@@ -71,5 +74,18 @@ abstract class BaseContext extends RawMinkContext implements TranslatedContextIn
     protected function fixStepArgument($argument)
     {
         return str_replace('\\"', '"', $argument);
+    }
+
+
+    /**
+     * Shortcut to use all kind of contexts
+     *
+     * Gets a reference to the requested context following the contexts hierarchy
+     *
+     * @param string $alias alias of the package
+     * @return BehatContext
+     */
+    protected function getContext($alias) {
+        return $this->getMainContext()->getSubcontext($alias);
     }
 }

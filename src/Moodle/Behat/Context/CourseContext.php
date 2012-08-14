@@ -4,6 +4,9 @@ namespace Moodle\Behat\Context;
 
 /**
  * Course context steps definitions
+ *
+ * @copyright 2012 David Monllaó
+ * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class CourseContext extends BaseContext
 {
@@ -15,7 +18,7 @@ class CourseContext extends BaseContext
      */
     public function iGoToACourse()
     {
-        $this->getMainContext()->visit('course/view.php?' . $this->parameters['course_1']);
+        $this->getContext('mink')->visit('course/view.php?' . $this->parameters['course_1']);
     }
 
     /**

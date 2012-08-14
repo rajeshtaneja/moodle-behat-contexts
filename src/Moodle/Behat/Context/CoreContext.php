@@ -2,27 +2,15 @@
 
 namespace Moodle\Behat\Context;
 
-use Behat\MinkExtension\Context\MinkContext;
-
 /**
  * Steps definition for basic browsing and Moodle actions
  *
+ * @copyright 2012 David Monllaó
+ * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class CoreContext extends MinkContext
+class CoreContext extends BaseContext
 {
 
-     private $parameters;
-
-    /**
-     * Initializes context.
-     * Every scenario gets it's own context object.
-     *
-     * @param array $parameters context parameters (set them up through behat.yml)
-     */
-    public function __construct(array $parameters)
-    {
-        $this->parameters = $parameters;
-    }
 
     /**
      * @Given /^I am logged as a "([^"]*)"$/
@@ -37,10 +25,10 @@ class CoreContext extends MinkContext
             throw new Exception('There is no user for role ' . $roleshortname . ' defined in behat.yml');
         }
 
-        $this->visit('login/index.php');
-        $this->fillField('username', $this->parameters[$usernamefield]);
-        $this->fillField('password', $this->parameters[$passwordfield]);
-        $this->pressButton('loginbtn');
+        $this->getContext('mink')->visit('login/index.php');
+        $this->getContext('mink')->fillField('username', $this->parameters[$usernamefield]);
+        $this->getContext('mink')->fillField('password', $this->parameters[$passwordfield]);
+        $this->getContext('mink')->pressButton('loginbtn');
     }
 
 
@@ -52,4 +40,18 @@ class CoreContext extends MinkContext
         $miliseconds = $seconds * 1000 ;
         $this->getSession()->wait($miliseconds);
     }
+
+
+    /**
+     * Shortcut to use all kind of contexts
+     *
+     * Gets a reference to the requested context following the contexts hierarchy
+     *
+     * @param string $alias alias of the package
+     * @return BehatContext
+     */
+    protected function getContext($alias) {
+        return $this->getMainContext()->getSubcontext($alias);
+    }
+
 }

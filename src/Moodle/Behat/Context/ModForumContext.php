@@ -3,7 +3,10 @@
 namespace Moodle\Behat\Context;
 
 /**
- * Course context steps definitions
+ * Forum context steps definitions
+ *
+ * @copyright 2012 David Monllaó
+ * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class ModForumContext extends BaseContext
 {
@@ -15,9 +18,10 @@ class ModForumContext extends BaseContext
      */
     public function iAddADiscussion()
     {
-        $this->getMainContext()->pressButton('submit');
-        $this->getMainContext()->fillField('subject', $this->parameters['stringexample_1']);
-        $this->getMainContext()->fillField('id_message', $this->parameters['textexample_1']);
-        $this->getMainContext()->pressButton('submitbutton');
+        $this->getContext('mink')->pressButton('submit');
+        $this->getContext('mink')->fillField('subject', $this->parameters['stringexample_1']);
+        $this->getContext('mink')->fillField('id_message', $this->parameters['textexample_1']);
+        $this->getContext('mink')->pressButton('submitbutton');
     }
+
 }
