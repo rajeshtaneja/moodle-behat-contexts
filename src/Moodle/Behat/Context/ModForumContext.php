@@ -18,10 +18,7 @@ class ModForumContext extends BaseContext
      */
     public function iAddADiscussion()
     {
-        $this->getContext('mink')->pressButton('submit');
-        $this->getContext('mink')->fillField('subject', $this->parameters['stringexample_1']);
-        $this->getContext('mink')->fillField('id_message', $this->parameters['textexample_1']);
-        $this->getContext('mink')->pressButton('submitbutton');
+        // TODO
     }
 
 }
