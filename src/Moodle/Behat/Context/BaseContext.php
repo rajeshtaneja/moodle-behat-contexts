@@ -82,6 +82,7 @@ abstract class BaseContext extends RawMinkContext implements TranslatedContextIn
      *
      * Gets a reference to the requested context following the contexts hierarchy
      *
+     * @todo Externalize method together with BaseContext->getContext
      * @param string $alias alias of the package
      * @return BehatContext
      */
