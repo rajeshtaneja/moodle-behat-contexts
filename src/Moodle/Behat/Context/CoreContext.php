@@ -13,29 +13,9 @@ class CoreContext extends BaseContext
 
 
     /**
-     * @Given /^I am logged as a "([^"]*)"$/
+     * @Given /^I wait (?P<seconds>\d+) seconds$/
      */
-    public function iAmLoggedAsA($roleshortname)
-    {
-
-        // Check if the role is set
-        $usernamefield = $roleshortname . '_username';
-        $passwordfield = $roleshortname . '_password';
-        if (empty($this->parameters[$usernamefield]) || empty($this->parameters[$passwordfield])) {
-            throw new Exception('There is no user for role ' . $roleshortname . ' defined in behat.yml');
-        }
-
-        $this->getContext('mink')->visit('login/index.php');
-        $this->getContext('mink')->fillField('username', $this->parameters[$usernamefield]);
-        $this->getContext('mink')->fillField('password', $this->parameters[$passwordfield]);
-        $this->getContext('mink')->pressButton('loginbtn');
-    }
-
-
-    /**
-     * @Given /^I wait for (\d+) seconds$/
-     */
-    public function iWaitForSeconds($seconds)
+    public function iWaitSeconds($seconds)
     {
         $miliseconds = $seconds * 1000 ;
         $this->getSession()->wait($miliseconds);
@@ -47,6 +27,7 @@ class CoreContext extends BaseContext
      *
      * Gets a reference to the requested context following the contexts hierarchy
      *
+     * @todo Externalize method together with BaseContext->getContext
      * @param string $alias alias of the package
      * @return BehatContext
      */
