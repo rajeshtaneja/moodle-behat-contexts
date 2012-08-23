@@ -4,6 +4,7 @@ namespace Moodle\Behat\Context;
 
 use Behat\MinkExtension\Context\RawMinkContext;
 use Behat\Behat\Context\TranslatedContextInterface;
+use Behat\Behat\Exception\PendingException;
 
 /**
  * Utilities base context
