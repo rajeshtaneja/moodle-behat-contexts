@@ -23,7 +23,7 @@ class AuthContext extends BaseContext
         $usernamefield = $roleshortname . '_username';
         $passwordfield = $roleshortname . '_password';
         if (empty($this->parameters[$usernamefield]) || empty($this->parameters[$passwordfield])) {
-            throw new Exception('There is no user for role ' . $roleshortname . ' defined in behat.yml');
+            throw new \Exception('There is no user for role ' . $roleshortname . ' defined in behat.yml');
         }
 
         return array(new When('I am on "login/index.php"'),
