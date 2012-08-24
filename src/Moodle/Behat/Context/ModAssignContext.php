@@ -1,6 +1,8 @@
 <?php
+
 namespace Moodle\Behat\Context;
 
+use Behat\Behat\Exception\PendingException;
 /**
  * Mod_Assign context step definitions
  *
@@ -10,82 +12,43 @@ namespace Moodle\Behat\Context;
 class ModAssignContext extends BaseContext {
 
     /**
-     * @Given /^that I am (a|logged in as a) "([^"]*)"$/
+     * @Given /^that I am logged in as "([^"]*)"$/
      */
-    public function thatIAmA($UserRole)
+    public function thatIAmLoggedInAs($arg1)
     {
         throw new PendingException();
     }
 
     /**
-     * @Given /^I have been enroled in a course$/
+     * @Given /^that I add "([^"]*)" to section "([^"]*)"$/
      */
-    public function iHaveBeenEnroledInACourse()
+    public function thatIAddToSection($arg1, $arg2)
     {
         throw new PendingException();
     }
 
     /**
-     * @Given /^an "([^"]*)" has been created$/
+     * @Given /^I fill in the form:$/
      */
-    public function anHasBeenCreated($arg1)
+    public function iFillInTheForm(TableNode $table)
     {
         throw new PendingException();
     }
 
     /**
-     * @Given /^I am on the assignment page$/
+     * @Given /^I click on the "([^"]*)" element$/
      */
-    public function iAmOnTheAssignmentPage()
+    public function iClickOnTheElement($arg1)
     {
         throw new PendingException();
     }
 
     /**
-     * @When /^I click on "([^"]*)"$/
+     * @Then /^the element "([^"]*)" should be displayed$/
      */
-    public function iClickOn($arg1)
+    public function theElementShouldBeDisplayed($arg1)
     {
         throw new PendingException();
     }
 
-    /**
-     * @Given /^I fill in the "([^"]*)" field with "([^"]*)"$/
-     */
-    public function iFillInTheFieldWith($arg1, $arg2)
-    {
-        throw new PendingException();
-    }
-
-    /**
-     * @Then /^I should be on the assignment page$/
-     */
-    public function iShouldBeOnTheAssignmentPage()
-    {
-        throw new PendingException();
-    }
-
-    /**
-     * @Given /^I should see the Online text that I entered$/
-     */
-    public function iShouldSeeTheOnlineTextThatIEntered()
-    {
-        throw new PendingException();
-    }
-
-    /**
-     * @Given /^I have already made an online text submission with the text "([^"]*)"$/
-     */
-    public function iHaveAlreadyMadeAnOnlineTextSubmissionWithTheText($arg1)
-    {
-        throw new PendingException();
-    }
-
-    /**
-     * @Given /^I should see the text "([^"]*)" that I entered$/
-     */
-    public function iShouldSeeTheTextThatIEntered($arg1)
-    {
-        throw new PendingException();
-    }
 }
