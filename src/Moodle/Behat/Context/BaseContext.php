@@ -89,4 +89,27 @@ abstract class BaseContext extends RawMinkContext implements TranslatedContextIn
     protected function getContext($alias) {
         return $this->getMainContext()->getSubcontext($alias);
     }
+
+
+    /**
+     * Based on AbstractWebDriver->curl uses reflection to access the protected method
+     *
+     * @todo Reflection is expensive, store
+     * @param string $requestMethod
+     * @param string $command
+     * @param array $parameters
+     * @param array $extraOptions
+     * @return array array('value' => ..., 'info' => ...)
+     */
+    protected function WebDriverCall($requestMethod, $command, $parameters = null, $extraOptions = array()) {
+
+        // Getting the webdriver session from the selenium2 driver in use
+        $wdsession = $this->getContext('mink')->getSession()->getDriver()->wdSession;
+        $curlmethod = new \ReflectionMethod($wdsession, 'curl');
+        $curlmethod->setAccessible(true);
+
+        $arguments = array($requestMethod, $command, $parameters, $extraOptions);
+
+        return $curlmethod->invokeArgs($wdsession, $arguments);
+    }
 }
