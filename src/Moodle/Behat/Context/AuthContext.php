@@ -14,7 +14,7 @@ class AuthContext extends BaseContext
 {
 
     /**
-     * @Given /^I am logged as (a|an) "(?P<roleshortname>[^"]*)"$/
+     * @Given /^I am (?:logged|logged in) as (?:a|an) "(?P<roleshortname>[^"]*)"$/
      */
     public function iAmLoggedAsA($roleshortname)
     {
@@ -26,10 +26,11 @@ class AuthContext extends BaseContext
             throw new \Exception('There is no user for role ' . $roleshortname . ' defined in behat.yml');
         }
 
-        return array(new When('I am on "login/index.php"'),
+       return array(new When('I am on "/login/index.php"'),
             new When('I fill in "username" with "' . $this->parameters[$usernamefield] . '"'),
             new When('I fill in "password" with "' . $this->parameters[$passwordfield] . '"'),
             new When('I press "loginbtn"'));
+        
     }
 
 

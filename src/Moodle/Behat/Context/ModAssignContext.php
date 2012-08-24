@@ -3,6 +3,7 @@
 namespace Moodle\Behat\Context;
 
 use Behat\Behat\Exception\PendingException;
+use Moodle\Behat\Context\BaseContext;
 /**
  * Mod_Assign context step definitions
  *
@@ -10,14 +11,6 @@ use Behat\Behat\Exception\PendingException;
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class ModAssignContext extends BaseContext {
-
-    /**
-     * @Given /^that I am logged in as "([^"]*)"$/
-     */
-    public function thatIAmLoggedInAs($arg1)
-    {
-        throw new PendingException();
-    }
 
     /**
      * @Given /^that I add "([^"]*)" to section "([^"]*)"$/
