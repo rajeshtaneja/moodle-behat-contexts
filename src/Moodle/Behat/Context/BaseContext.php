@@ -114,4 +114,28 @@ abstract class BaseContext extends RawMinkContext implements TranslatedContextIn
 
         return $curlmethod->invokeArgs($wdsession, $arguments);
     }
+
+
+    /**
+     * Returns the element id
+     *
+     * Useful for web driver calls to session/:sessionid/elementid/actionname
+     *
+     * @throws Exception If $id not found
+     * @param string $id
+     * @return integer The element id
+     */
+    protected function getElementId($id) {
+
+        $pageelement = $this->getContext('mink')->getSession()->getPage()->findById($id);
+        if (!$pageelement) {
+            throw new \Exception('Element with id ' . $id . ' not found');
+        }
+
+        $xpath = $pageelement->getXpath();
+        $element = $this->getContext('mink')->getSession()->getDriver()->wdSession->element('xpath', $xpath);
+
+        return $element->getID();
+    }
+
 }
