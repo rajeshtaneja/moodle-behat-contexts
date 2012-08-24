@@ -94,11 +94,12 @@ abstract class BaseContext extends RawMinkContext implements TranslatedContextIn
     /**
      * Based on AbstractWebDriver->curl uses reflection to access the protected method
      *
-     * @todo Reflection is expensive, store
-     * @param string $requestMethod
-     * @param string $command
-     * @param array $parameters
-     * @param array $extraOptions
+     * @todo Reflection is expensive, store the reflection method
+     * @param string $requestMethod HTTP request method, e.g., 'GET', 'POST', or 'DELETE'
+     * @param string $command       If not defined in methods() this function will throw.
+     * @param array $parameters     If an array(), they will be posted as JSON parameters
+     *                               If a number or string, "/$params" is appended to url
+     * @param array $extraOptions   key=>value pairs of curl options to pass to curl_setopt()
      * @return array array('value' => ..., 'info' => ...)
      */
     protected function WebDriverCall($requestMethod, $command, $parameters = null, $extraOptions = array()) {
