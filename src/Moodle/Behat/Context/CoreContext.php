@@ -11,7 +11,6 @@ namespace Moodle\Behat\Context;
 class CoreContext extends BaseContext
 {
 
-
     /**
      * @Given /^I wait (?P<seconds>\d+) seconds$/
      */
@@ -21,6 +20,17 @@ class CoreContext extends BaseContext
         $this->getSession()->wait($miliseconds);
     }
 
+
+    /**
+     * @When /^I submit the "(?P<formid>[^"]*)" form$/
+     * @param unknown_type $formid
+     */
+    public function iSubmitTheForm($formid)
+    {
+        // Getting the element id to interact with it
+        $elementid = $this->getElementId($formid);
+        $result = $this->WebDriverCall('POST', '/element/' . $elementid . '/submit');
+    }
 
     /**
      * Shortcut to use all kind of contexts
