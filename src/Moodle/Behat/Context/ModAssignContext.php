@@ -10,9 +10,9 @@ namespace Moodle\Behat\Context;
 class ModAssignContext extends BaseContext {
 
     /**
-     * @Given /^that I am a "([^"]*)"$/
+     * @Given /^that I am (a|logged in as a) "([^"]*)"$/
      */
-    public function thatIAmA($arg1)
+    public function thatIAmA($UserRole)
     {
         throw new PendingException();
     }
