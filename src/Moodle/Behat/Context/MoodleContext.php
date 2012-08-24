@@ -25,7 +25,7 @@ class MoodleContext extends BehatContext
 
         $dir = opendir(dirname(__FILE__));
         if (!$dir) {
-            throw new Exception('Moodle contexts can\'t be read');
+            throw new \Exception('Moodle contexts can\'t be read');
         }
 
         // Gets all the moodle contexts

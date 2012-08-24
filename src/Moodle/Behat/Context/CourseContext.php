@@ -23,7 +23,7 @@ class CourseContext extends BaseContext
     public function iGoToACourse()
     {
         if (empty($this->parameters['course_1'])) {
-            throw new Exception('There is no course_1 defined in behat.yml');
+            throw new \Exception('There is no course_1 defined in behat.yml');
         }
 
         return new Given('I go to the course ' . $this->parameters['course_1']);
@@ -52,7 +52,7 @@ class CourseContext extends BaseContext
     public function iGoToTheSettingsPageOfACourse()
     {
         if (empty($this->parameters['course_1'])) {
-            throw new Exception('There is no default course defined in behat.yml (course_1 setting)');
+            throw new \Exception('There is no default course defined in behat.yml (course_1 setting)');
         }
 
         return new Given('I go to the settings page of the course ' . $this->parameters['course_1']);
@@ -77,7 +77,7 @@ class CourseContext extends BaseContext
     public function iGoToTheGradesPageOfACourse()
     {
         if (empty($this->parameters['course_1'])) {
-            throw new Exception('There is no default course defined in behat.yml (course_1 setting)');
+            throw new \Exception('There is no default course defined in behat.yml (course_1 setting)');
         }
 
         return new Given('I go to the grades page of the course ' . $this->parameters['course_1']);
