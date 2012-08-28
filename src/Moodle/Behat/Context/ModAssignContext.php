@@ -4,6 +4,9 @@ namespace Moodle\Behat\Context;
 
 use Behat\Behat\Exception\PendingException;
 use Moodle\Behat\Context\BaseContext;
+use Behat\Mink\Driver\Selenium2Driver;
+use Behat\Behat\Context\Step\When as When;
+use Behat\Behat\Context\Step\Given as Given;
 /**
  * Mod_Assign context step definitions
  *
@@ -11,15 +14,16 @@ use Moodle\Behat\Context\BaseContext;
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class ModAssignContext extends BaseContext {
-
-    /**
+     /**
      * @Given /^that I add "([^"]*)" to section "([^"]*)"$/
      */
-    public function thatIAddToSection($arg1, $arg2)
+    public function thatIAddToSection($section, $activity)
     {
-        throw new PendingException();
+        $this->getContext('mink')->pressButton("Turn editing on");
+        $this->getMink()->getSession()->getPage()->
+        $this->getContext('mink')->getSession()->getPage()->click("//*[@id='section-" . $section . "']/*/*/*/div[@class='section-modchooser']/*/*");
+        $this->getContext('mink')->getSession()->getPage()->click(".//*[@id=" . $activity . "]");
     }
-
     /**
      * @Given /^I fill in the form:$/
      */
