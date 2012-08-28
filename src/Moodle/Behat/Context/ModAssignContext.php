@@ -4,7 +4,6 @@ namespace Moodle\Behat\Context;
 
 use Behat\Behat\Exception\PendingException;
 use Moodle\Behat\Context\BaseContext;
-use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Behat\Context\Step\When as When;
 use Behat\Behat\Context\Step\Given as Given;
 /**
@@ -14,24 +13,20 @@ use Behat\Behat\Context\Step\Given as Given;
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class ModAssignContext extends BaseContext {
-     /**
-     * @Given /^that I add "([^"]*)" to section "([^"]*)"$/
-     */
-    public function thatIAddToSection($section, $activity)
-    {
-        $this->getContext('mink')->pressButton("Turn editing on");
-        $this->getMink()->getSession()->getPage()->
-        $this->getContext('mink')->getSession()->getPage()->click("//*[@id='section-" . $section . "']/*/*/*/div[@class='section-modchooser']/*/*");
-        $this->getContext('mink')->getSession()->getPage()->click(".//*[@id=" . $activity . "]");
-    }
     /**
      * @Given /^I fill in the form:$/
+     * @todo Going to start with text fields, text areas and dropdowns first and
+     * then add more features later.
      */
     public function iFillInTheForm(TableNode $table)
     {
-        throw new PendingException();
+        $loctextfield = ".//div[contains(.,'" . $fieldLabel . "')]/div/input";
+        $loctextarea = ".//div[contains(.,'" . $fieldLabel . "')]/*/*/*/textarea";
+        $locdropdown = ".//*[contains(.,'" . $fieldLabel . "')]/*/select";
+        //$loccheckbox = "";
+        //$locdate = "";
+        //$locdatetime = "";
     }
-
     /**
      * @Given /^I click on the "([^"]*)" element$/
      */
