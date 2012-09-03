@@ -4,8 +4,7 @@ namespace Moodle\Behat\Context;
 
 use Behat\Behat\Exception\PendingException;
 use Moodle\Behat\Context\BaseContext;
-use Behat\Behat\Context\Step\When as When;
-use Behat\Behat\Context\Step\Given as Given;
+use Behat\Gherkin\Node\TableNode;
 /**
  * Mod_Assign context step definitions
  *
@@ -17,30 +16,59 @@ class ModAssignContext extends BaseContext {
      * @Given /^I fill in the form:$/
      * @todo Going to start with text fields, text areas and dropdowns first and
      * then add more features later.
+     * Fills in an add/edit form in Moodle.
      */
     public function iFillInTheForm(TableNode $table)
     {
-        $loctextfield = ".//div[contains(.,'" . $fieldLabel . "')]/div/input";
-        $loctextarea = ".//div[contains(.,'" . $fieldLabel . "')]/*/*/*/textarea";
-        $locdropdown = ".//*[contains(.,'" . $fieldLabel . "')]/*/select";
-        //$loccheckbox = "";
-        //$locdate = "";
-        //$locdatetime = "";
+        $hash = $table->getHash();
+        foreach ($hash as $tablerow) {
+            //Waits for the submit buttons before running
+            $this->getContext('mink')->getSession()->getDriver()->wait(2,'document.getElementById("id_cancel")');
+            $fieldlabel = $tablerow['field_name'];
+            $value = $tablerow['value'];
+            //xpath locator expressions
+            $loctextfield = ".//div[contains(.,'" . $fieldlabel . "')]/div/input";
+            $loctextarea = ".//div[contains(.,'" . $fieldlabel . "')]/*/*/*/textarea";
+            $locdropdown = ".//*[contains(.,'" . $fieldlabel . "')]/*/select";
+
+            //Webdriver locators
+            $textfield = $this->getContext('mink')->getSession()->getDriver()->find($loctextfield);
+            $textarea = $this->getContext('mink')->getSession()->getDriver()->find($loctextarea);
+            $dropdown = $this->getContext('mink')->getSession()->getDriver()->find($locdropdown);
+            
+
+            //Construct enter text
+            if (!empty($textfield) || !empty($textarea)) {
+                $this->getContext('mink')->getSession()->getPage()->fillField($fieldlabel, $value);
+            } elseif (!empty($dropdown)) {
+                $this->getContext('mink')->getSession()->getPage()->selectFieldOption($fieldlabel, $value);
+            } else {
+                throw new \Exception('No fields have been filled in');
+            }
+        }
+        
     }
     /**
-     * @Given /^I click on the "([^"]*)" element$/
+     * @Given /^I (?:click|click on) "([^"]*)"$/
      */
-    public function iClickOnTheElement($arg1)
+    public function iClickButton($buttonValue)
     {
-        throw new PendingException();
+        $this->getContext('mink')->getSession()->getPage()->pressButton($buttonValue);
     }
 
     /**
-     * @Then /^the element "([^"]*)" should be displayed$/
+     * @Then /^the title "([^"]*)" should be displayed$/
      */
-    public function theElementShouldBeDisplayed($arg1)
+    public function theElementShouldBeDisplayed($assignmentTitle)
     {
-        throw new PendingException();
+        $this->getContext('mink')->getSession()->getDriver()->wait(5,NULL);
+        $assertTextPresent = $this->getContext('mink')->getSession()->getDriver()->find(".//*[contains(.,'" . $assignmentTitle . "')]");
+        if (empty($assertTextPresent))
+        {
+            throw new \Exception('The text is not present on the screen');
+        } else {
+            //do nothing
+        }
     }
 
 }

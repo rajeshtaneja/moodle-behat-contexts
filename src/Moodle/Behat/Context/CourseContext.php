@@ -100,9 +100,11 @@ class CourseContext extends BaseContext
      */
     public function thatIAddToSection($activity, $section)
     {
+        $this->getContext('mink')->getSession()->getDriver()->wait(10, null);
         $this->getContext('mink')->pressButton("Turn editing on");
         $this->getContext('mink')->getSession()->getDriver()->click("//*[@id='section-" . $section . "']/*/*/*/div[@class='section-modchooser']/*/*");
         $this->getContext('mink')->getSession()->getDriver()->click(".//label[contains(.,'" . $activity . "')]/input");
+        $this->getContext('mink')->getSession()->getDriver()->click(".//*[@id='submitbutton']");
     }
 
 }
