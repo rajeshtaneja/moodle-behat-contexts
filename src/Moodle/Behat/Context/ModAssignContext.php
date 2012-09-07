@@ -81,9 +81,17 @@ class ModAssignContext extends BaseContext {
      */
     public function i_enter_the_dates($field_label, TableNode $table)
     {
-
+        //Set the field label to the format used by id's for this field
+        //$lc_field_label = lcfirst($field_label);
+        $id_string = str_replace(" ", "", lcfirst($field_label));
         //Make sure the field is enabled
-        
+        $loc_checkbox = ".//*[@id='id_" . $id_string . "_enabled']";
+        $checked = $loc_checkbox . "[@checked='checked']";
+        if (empty($checked)) {
+            $this->getContext('mink')->getSession()->getPage()->checkField();
+        } elseif (!empty($checked)) {
+            //Do nothing!
+        }
         //Process the table selecting values for each dropdown.
         $hash = $table->getHash();
         foreach ($hash as $tablerow)
@@ -91,8 +99,7 @@ class ModAssignContext extends BaseContext {
             $date_unit = $tablerow['date_unit'];
             $value = $tablerow['value'];
             //Build ID string
-            $date_string = str_replace(" ", "", $field_label);
-            $id = "id_" . $date_string . "date_" . $date_unit;
+            $id = "id_" . $id_string . "date_" . $date_unit;
             //Select the value
             $this->getContext('mink')->getSession()->getPage()->selectFieldOption($id, $value);
         }
