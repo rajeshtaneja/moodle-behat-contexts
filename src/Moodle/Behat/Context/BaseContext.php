@@ -137,6 +137,8 @@ abstract class BaseContext extends RawMinkContext implements TranslatedContextIn
 
         return $element->getID();
     }
+
+    
     /**
      * Waits $timetowait seconds for an xpath expression to return true. 
      * This makes test more robust and less likely to break. It can be used
