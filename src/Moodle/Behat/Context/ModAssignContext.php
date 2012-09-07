@@ -18,14 +18,19 @@ class ModAssignContext extends BaseContext {
      * then add more features later.
      * Fills in an add/edit form in Moodle.
      */
-    public function iFillInTheForm(TableNode $table)
+    public function i_fill_in_the_form(TableNode $table)
     {
         $hash = $table->getHash();
         foreach ($hash as $tablerow) {
+            
             //Waits for the submit buttons before running
-            $this->getContext('mink')->getSession()->getDriver()->wait(2,'document.getElementById("id_cancel")');
+            $loccancel = 'id_cancel';
+            $loconscreentext = ".//*[@id='" . $loccancel . "']";
+            $timetowait = 30;
+            $this->explicitWait($loconscreentext, $timetowait);
             $fieldlabel = $tablerow['field_name'];
             $value = $tablerow['value'];
+            
             //xpath locator expressions
             $loctextfield = ".//div[contains(.,'" . $fieldlabel . "')]/div/input";
             $loctextarea = ".//div[contains(.,'" . $fieldlabel . "')]/*/*/*/textarea";
@@ -51,23 +56,45 @@ class ModAssignContext extends BaseContext {
     /**
      * @Given /^I (?:click|click on) "([^"]*)"$/
      */
-    public function iClickButton($buttonValue)
+    public function i_click_button($buttonValue)
     {
         $this->getContext('mink')->getSession()->getPage()->pressButton($buttonValue);
     }
 
     /**
-     * @Then /^the title "([^"]*)" should be displayed$/
+     * @Then /^the ([^"]*) "([^"]*)" should be displayed$/
      */
-    public function theElementShouldBeDisplayed($assignmentTitle)
+    public function the_text_should_be_displayed($assignmentTitle)
     {
-        $this->getContext('mink')->getSession()->getDriver()->wait(5,NULL);
-        $assertTextPresent = $this->getContext('mink')->getSession()->getDriver()->find(".//*[contains(.,'" . $assignmentTitle . "')]");
+        $loconscreentext = ".//*[contains(.,'" . $assignmentTitle . "')]";
+        $timetowait = 30;
+        $this->explicitWait($loconscreentext, $timetowait);
+        $assertTextPresent = $this->getContext('mink')->getSession()->getDriver()->find($loconscreentext);
         if (empty($assertTextPresent))
         {
             throw new \Exception('The text is not present on the screen');
-        } else {
-            //do nothing
+            } elseif (!empty ($assertTextPresent)) {
+        }
+    }
+     /**
+     * @Given /^I enter the dates in "([^"]*)":$/
+     */
+    public function i_enter_the_dates($field_label, TableNode $table)
+    {
+
+        //Make sure the field is enabled
+        
+        //Process the table selecting values for each dropdown.
+        $hash = $table->getHash();
+        foreach ($hash as $tablerow)
+        {
+            $date_unit = $tablerow['date_unit'];
+            $value = $tablerow['value'];
+            //Build ID string
+            $date_string = str_replace(" ", "", $field_label);
+            $id = "id_" . $date_string . "date_" . $date_unit;
+            //Select the value
+            $this->getContext('mink')->getSession()->getPage()->selectFieldOption($id, $value);
         }
     }
 

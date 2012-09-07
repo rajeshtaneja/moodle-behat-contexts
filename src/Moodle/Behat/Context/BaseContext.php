@@ -137,5 +137,21 @@ abstract class BaseContext extends RawMinkContext implements TranslatedContextIn
 
         return $element->getID();
     }
-
+    /**
+     * Waits $timetowait seconds for an xpath expression to return true. 
+     * This makes test more robust and less likely to break. It can be used
+     * in conjunction with mink locators by returning the xpath to a var.
+     * @param type $xpath The xpath to be evaluated.
+     * @param type $timetowait The time to wait in seconds for the xpath to return
+     * True.
+     * @throws \Exception Throws a descriptive exception when the test fails.
+     */
+    protected function explicitWait($xpath, $timetowait) {
+        for ($counter = 1; $counter <=$timetowait; $counter++)
+        {
+            $element = $this->getContext('mink')->getSession()->getDriver()->find($xpath);
+            $this->getContext('mink')->getSession()->getDriver()->wait(1000, null);
+            if (!empty($element)) break;
+        }
+    }
 }
