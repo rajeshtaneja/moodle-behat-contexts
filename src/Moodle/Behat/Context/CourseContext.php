@@ -98,13 +98,20 @@ class CourseContext extends BaseContext
     /**
      * @Given /^that I add "([^"]*)" to section "([^"]*)"$/
      */
-    public function thatIAddToSection($activity, $section)
+    public function that_I_add_to_section($activity, $section)
     {
-        $this->getContext('mink')->pressButton("Turn editing on");
-        $locAddActivity = "//*[@id='section-" . $section . "']/*/*/*/div[@class='section-modchooser']/*/*";
+        //Time property
         $timetowait = 30;
-        $this->explicitWait($locAddActivity, $timetowait);
-        $this->getContext('mink')->getSession()->getDriver()->click($locAddActivity);
+        //Turn Editing on button properties
+        $label_turn_editing_on = "Turn editing on";
+        $loc_turn_editing_on = ".//*[contains(.,'" . $label_turn_editing_on . "')]";
+        //Add Activity properties
+        $loc_add_activity = "//*[@id='section-" . $section . "']/*/*/*/div[@class='section-modchooser']/*/*";
+        //Functions
+        $this->explicitWait($loc_turn_editing_on, $timetowait);
+        $this->getContext('mink')->pressButton($label_turn_editing_on);
+        $this->explicitWait($loc_add_activity, $timetowait);
+        $this->getContext('mink')->getSession()->getDriver()->click($loc_add_activity);
         $this->getContext('mink')->getSession()->getDriver()->click(".//label[contains(.,'" . $activity . "')]/input");
         $this->getContext('mink')->getSession()->getDriver()->click(".//*[@id='submitbutton']");
     }

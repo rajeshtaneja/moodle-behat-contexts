@@ -14,7 +14,7 @@ class AuthContext extends BaseContext
 {
 
     /**
-     * @Given /^I am (?:logged|logged in) as (?:a|an) "(?P<roleshortname>[^"]*)"$/
+     * @Given /^I (?:am|have) (?:logged|logged in) as (?:a|an) "(?P<roleshortname>[^"]*)"$/
      */
     public function iAmLoggedAsA($roleshortname)
     {
